@@ -7,7 +7,7 @@
 
 <!-- PWA: manifest -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#17181A">
+<meta name="theme-color" content="#000000">
 
 <!-- PWA: iOS support -->
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,22 +19,22 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
 
   :root{
-    --bg:#17181A;
-    --panel:#202124;
-    --panel2:#27282C;
-    --panel3:#2C2D31;
-    --line:#37383D;
-    --line-bright:#4A4B51;
-    --text:#EDEDEE;
-    --muted:#8D8E93;
-    --orange:#D9622B;
-    --orange-bright:#F2874A;
-    --orange-dim:#7A3A18;
-    --danger:#E5484D;
-    --ok:#7CB88A;
+    --bg:#000000;
+    --card:#1C1C1E;
+    --card2:#2C2C2E;
+    --card3:#3A3A3C;
+    --sep:rgba(84,84,88,0.48);
+    --label:#FFFFFF;
+    --label2:rgba(235,235,245,0.6);
+    --label3:rgba(235,235,245,0.3);
+    --accent:#0A84FF;
+    --accent-bright:#409CFF;
+    --accent-dim:rgba(10,132,255,0.16);
+    --success:#30D158;
+    --danger:#FF453A;
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
@@ -43,151 +43,157 @@
   body{
     margin:0;
     background:
-      radial-gradient(ellipse at 10% -10%, rgba(217,98,43,0.10), transparent 45%),
-      radial-gradient(ellipse at 100% 110%, rgba(217,98,43,0.06), transparent 50%),
+      radial-gradient(circle at 18% -8%, rgba(10,132,255,0.14), transparent 42%),
+      radial-gradient(circle at 100% 105%, rgba(10,132,255,0.08), transparent 48%),
       var(--bg);
-    color:var(--text);
-    font-family:'Rubik', sans-serif;
+    color:var(--label);
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
     min-height:100vh;
     min-height:100dvh;
-    padding:calc(20px + var(--safe-top)) 14px calc(30px + var(--safe-bottom));
+    padding:calc(22px + var(--safe-top)) 16px calc(32px + var(--safe-bottom));
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:640px; margin:0 auto;}
+  .wrap{max-width:600px; margin:0 auto;}
 
-  header{
-    display:flex; align-items:center; justify-content:space-between;
-    margin-bottom:18px;
-    gap:10px;
+  /* Large-title nav header, iOS style */
+  header{margin-bottom:22px;}
+  .nav-title-row{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
   }
-  header .title{
-    font-family:'Oswald', sans-serif;
-    font-weight:700; font-size:20px; letter-spacing:0.3px;
-    text-transform:uppercase;
+  .large-title{
+    margin:0;
+    font-size:30px; font-weight:700; letter-spacing:-0.4px; line-height:1.15;
   }
-  header .title span{color:var(--orange);}
-  header .sub{color:var(--muted); font-size:11.5px; margin-top:3px;}
+  .large-title .accent{color:var(--accent-bright);}
+  .subtitle{margin:4px 0 0; color:var(--label2); font-size:13.5px; font-weight:400;}
+  .update-line{margin:10px 0 0; color:var(--label3); font-size:11.5px; font-family:'IBM Plex Mono', monospace;}
+
   .count-badge{
     font-family:'IBM Plex Mono', monospace;
-    background:var(--panel2); border:1px solid var(--line);
-    color:var(--orange-bright); font-size:11.5px; padding:6px 10px; border-radius:4px;
+    background:var(--accent-dim);
+    color:var(--accent-bright); font-size:12px; font-weight:600;
+    padding:7px 12px; border-radius:100px;
     white-space:nowrap;
     flex-shrink:0;
+    margin-top:2px;
   }
 
-  /* Dispatch console */
-  .console{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:18px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.02);
-    position:relative;
+  .section-label{
+    display:flex; align-items:center; gap:6px;
+    color:var(--label2); font-size:12.5px; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.4px;
+    margin:0 4px 8px;
+  }
+  .section-label svg{color:var(--label3); flex-shrink:0;}
+
+  /* Card container, grouped-list style */
+  .card{
+    background:var(--card);
+    border-radius:20px;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 16px 34px rgba(0,0,0,0.45);
     overflow:hidden;
   }
-  .console::before{
-    content:"";
-    position:absolute; top:0; left:0; right:0; height:5px;
-    background:repeating-linear-gradient(-45deg, var(--orange) 0 10px, #1A1A1C 10px 20px);
-    opacity:0.85;
-  }
-  .console-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px; color:var(--muted); letter-spacing:1.5px; margin:8px 0 12px;
-    display:flex; align-items:center; gap:7px; text-transform:uppercase;
-  }
-  .console-label .dot{width:6px; height:6px; border-radius:50%; background:var(--orange); box-shadow:0 0 8px rgba(217,98,43,0.7);}
+  .compose-card{padding:14px;}
 
-  .code-row{display:flex; gap:9px; align-items:center;}
+  .code-row{display:flex; gap:10px; align-items:center;}
   #codeInput{
     flex:1;
     min-width:0;
     font-family:'IBM Plex Mono', monospace;
-    font-size:24px; font-weight:600;
-    background:#101113;
-    border:1px solid var(--line-bright);
-    border-radius:8px;
-    color:var(--orange-bright);
+    font-size:22px; font-weight:600;
+    background:var(--card2);
+    border:1px solid transparent;
+    border-radius:14px;
+    color:var(--label);
     text-align:center;
-    padding:14px 8px;
-    letter-spacing:2px;
+    padding:14px 10px;
+    letter-spacing:1.5px;
     outline:none;
-    transition:border-color .15s, box-shadow .15s;
+    transition:border-color .15s, box-shadow .15s, background .15s;
     -webkit-appearance:none;
   }
-  #codeInput:focus{border-color:var(--orange); box-shadow:0 0 0 3px rgba(217,98,43,0.15);}
-  #codeInput::placeholder{color:#4A4B51; letter-spacing:1px; font-size:15px;}
+  #codeInput:focus{border-color:var(--accent); background:var(--card3); box-shadow:0 0 0 4px var(--accent-dim);}
+  #codeInput::placeholder{color:var(--label3); letter-spacing:0.4px; font-size:14.5px; font-family:-apple-system, 'IBM Plex Sans Arabic', sans-serif;}
 
-  .go-btn{
-    font-family:'Oswald', sans-serif;
-    font-weight:600; font-size:13.5px; letter-spacing:0.5px; text-transform:uppercase;
-    background:var(--orange); color:#1A1200;
-    border:none; border-radius:8px;
-    padding:0 18px; height:56px;
+  .send-btn{
+    display:flex; align-items:center; justify-content:center;
+    width:54px; height:54px; flex-shrink:0;
+    background:var(--accent); color:#fff;
+    border:none; border-radius:50%;
     cursor:pointer;
-    transition:transform .1s, background .15s;
-    white-space:nowrap;
-    flex-shrink:0;
+    transition:transform .12s, background .15s, opacity .15s;
   }
-  .go-btn:active{transform:scale(0.96);}
-  .go-btn:hover{background:var(--orange-bright);}
+  .send-btn:active{transform:scale(0.90); background:var(--accent-bright);}
+  .send-btn:focus-visible{outline:2px solid var(--accent-bright); outline-offset:3px;}
 
   .live-match{
-    margin-top:12px; min-height:20px;
-    font-size:13px; color:var(--muted);
+    margin:14px 2px 2px; min-height:20px;
+    font-size:13.5px; color:var(--label2);
+    display:flex; align-items:center; gap:6px;
   }
-  .live-match b{color:var(--ok); font-weight:600;}
-  .live-match.notfound{color:var(--danger);}
+  .live-match .status-icon{display:flex; flex-shrink:0;}
+  .live-match .status-icon.ok{color:var(--success);}
+  .live-match .status-icon.bad{color:var(--danger);}
+  .live-match b{color:var(--label); font-weight:600;}
+  .live-match.notfound{color:var(--label2);}
 
-  /* Results list (embassy matches) */
+  /* Results list, grouped table row style */
   .results-list{
-    margin-top:10px;
+    margin-top:12px;
     display:flex;
     flex-direction:column;
-    gap:7px;
     max-height:340px;
     overflow-y:auto;
     -webkit-overflow-scrolling:touch;
+    border-radius:14px;
+    background:var(--card2);
   }
+  .results-list:empty{margin-top:0;}
   .result-item{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    background:var(--panel3);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:13px 14px;
+    gap:12px;
+    padding:12px 14px;
     min-height:48px;
     cursor:pointer;
     text-align:right;
-    transition:background .12s, border-color .12s, transform .08s;
+    border-bottom:1px solid var(--sep);
+    transition:background .12s;
   }
-  .result-item:active{transform:scale(0.98); background:var(--panel2);}
-  .result-item:hover{border-color:var(--orange-dim); background:var(--panel2);}
-  .result-item .r-name{font-size:14.5px; font-weight:500; color:var(--text);}
-  .result-item .r-arrow{color:var(--orange); font-size:16px; flex-shrink:0;}
+  .result-item:last-child{border-bottom:none;}
+  .result-item:active{background:var(--card3);}
+  .result-item .r-icon{
+    display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px; border-radius:9px; flex-shrink:0;
+    background:var(--accent-dim); color:var(--accent-bright);
+  }
+  .result-item .r-name{font-size:14.5px; font-weight:500; color:var(--label); flex:1;}
+  .result-item .r-arrow{color:var(--label3); flex-shrink:0; display:flex;}
 
-  /* Quick category chips */
+  /* Filter chips, iOS capsule style */
   .chips{
-    display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;
+    display:flex; gap:9px; flex-wrap:wrap; margin-top:16px;
   }
   .chip{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px; color:var(--muted);
-    background:var(--panel2); border:1px solid var(--line);
-    padding:7px 12px; border-radius:20px;
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:500; color:var(--label2);
+    background:var(--card); border:none;
+    padding:9px 15px; border-radius:100px;
     cursor:pointer; white-space:nowrap;
-    transition:border-color .12s, color .12s;
+    transition:background .12s, color .12s, transform .1s;
   }
-  .chip:active{transform:scale(0.96);}
-  .chip.active{color:var(--orange-bright); border-color:var(--orange-dim);}
+  .chip svg{flex-shrink:0;}
+  .chip:active{transform:scale(0.95); background:var(--card2);}
 
   .toast{
-    position:fixed; bottom:calc(24px + var(--safe-bottom)); left:50%; transform:translateX(-50%);
-    background:var(--panel2); border:1px solid var(--orange-dim); color:var(--text);
-    padding:11px 20px; border-radius:8px; font-size:13.5px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.45);
+    position:fixed; bottom:calc(26px + var(--safe-bottom)); left:50%; transform:translateX(-50%);
+    background:rgba(28,28,30,0.78);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.08);
+    color:var(--label);
+    padding:12px 22px; border-radius:100px; font-size:13.5px; font-weight:500;
+    box-shadow:0 12px 32px rgba(0,0,0,0.5);
     opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
     z-index:50;
     max-width:88vw;
@@ -195,54 +201,101 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
 
+  .suggest-card{
+    display:flex; align-items:center; gap:12px;
+    background:var(--card);
+    border-radius:16px;
+    padding:14px 16px;
+    margin-top:16px;
+    text-decoration:none;
+    box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 24px rgba(0,0,0,0.35);
+    transition:background .12s, transform .1s;
+  }
+  .suggest-card:active{transform:scale(0.98); background:var(--card2);}
+  .suggest-icon{
+    display:flex; align-items:center; justify-content:center;
+    width:38px; height:38px; border-radius:11px; flex-shrink:0;
+    background:var(--accent-dim); color:var(--accent-bright);
+  }
+  .suggest-text{display:flex; flex-direction:column; gap:2px; flex:1; min-width:0;}
+  .suggest-title{font-size:13.5px; font-weight:600; color:var(--label);}
+  .suggest-sub{font-size:12px; color:var(--label2);}
+  .suggest-arrow{color:var(--label3); flex-shrink:0; display:flex;}
+
   footer{
     text-align:center;
-    margin-top:26px;
-    color:#5A5B60;
+    margin-top:28px;
+    color:var(--label3);
     font-family:'IBM Plex Mono', monospace;
     font-size:10.5px;
     letter-spacing:0.4px;
   }
 
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; animation:none !important;}
+  }
+
   /* Mobile tightening */
   @media (max-width:420px){
-    body{padding:calc(16px + var(--safe-top)) 10px calc(24px + var(--safe-bottom));}
-    header .title{font-size:17px;}
-    .console{padding:14px;}
-    #codeInput{font-size:20px; letter-spacing:1px;}
-    .go-btn{padding:0 14px; font-size:12.5px;}
+    .large-title{font-size:25px;}
+    .compose-card{padding:12px;}
+    #codeInput{font-size:19px;}
+    .send-btn{width:48px; height:48px;}
   }
-  @media (max-width:360px){
+  @media (max-width:340px){
     .code-row{flex-wrap:wrap;}
-    #codeInput{width:100%; font-size:22px;}
-    .go-btn{height:50px; width:100%;}
+    #codeInput{width:100%;}
+    .send-btn{width:100%; height:48px; border-radius:14px;}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div>
-      <div class="title">لوحة <span>المواقع</span></div>
-      <div class="sub">دخّل رقم الموقع أو اسم السفارة</div>
-      <div class="sub" id="updateDate" style="margin-top:2px;">آخر تحديث: 29.08.2026</div>
+    <div class="nav-title-row">
+      <div>
+        <h1 class="large-title">لوحة <span class="accent">المواقع</span></h1>
+        <p class="subtitle">دخّل رقم الموقع أو اسم السفارة</p>
+      </div>
+      <div class="count-badge" id="countBadge">0 موقع</div>
     </div>
-    <div class="count-badge" id="countBadge">0 موقع</div>
+    <p class="update-line" id="updateDate">آخر تحديث: 29.08.2026</p>
   </header>
 
-  <div class="console">
-    <div class="console-label"><span class="dot"></span> إدخال البحث</div>
+  <div class="section-label">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+    بحث
+  </div>
+
+  <div class="card compose-card">
     <div class="code-row">
       <input id="codeInput" type="text" inputmode="search" placeholder="رقم موقع، أو اكتب سفاره…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-      <button class="go-btn" id="goBtn">افتح 📍</button>
+      <button class="send-btn" id="goBtn" aria-label="افتح الموقع">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
+      </button>
     </div>
     <div class="live-match" id="liveMatch"></div>
     <div class="results-list" id="resultsList"></div>
     <div class="chips">
-      <div class="chip" id="chipEmbassies">🏛️ كل السفارات</div>
-      <div class="chip" id="chipClear">✖️ مسح</div>
+      <div class="chip" id="chipEmbassies">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M6 21V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v16"/><path d="M14 9h4a1 1 0 0 1 1 1v11"/><path d="M9 8h.01M9 11h.01M9 14h.01M9 17h.01"/></svg>
+        كل السفارات
+      </div>
     </div>
   </div>
+
+  <a class="suggest-card" href="https://signal.me/#p/+962799693316" target="_blank" rel="noopener">
+    <span class="suggest-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </span>
+    <span class="suggest-text">
+      <span class="suggest-title">عندك تعديل على موقع أو اقتراح جديد؟</span>
+      <span class="suggest-sub">راسلني مباشرة عبر Signal</span>
+    </span>
+    <span class="suggest-arrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M15 18l-6-6 6-6"/></svg>
+    </span>
+  </a>
 
   <footer>Created by Amer Hbahbeh</footer>
 </div>
@@ -252,6 +305,14 @@
 <script>
 let locations = [];
 let embassies = [];
+
+const ICONS = {
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 21s7-7.58 7-12a7 7 0 1 0-14 0c0 4.42 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>',
+  building: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M6 21V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v16"/><path d="M14 9h4a1 1 0 0 1 1 1v11"/><path d="M9 8h.01M9 11h.01M9 14h.01M9 17h.01"/></svg>',
+  chevron: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M15 18l-6-6 6-6"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path fill-rule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm4.03-11.97a.75.75 0 0 0-1.06-1.06l-4.47 4.47-1.97-1.97a.75.75 0 1 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l5-5z" clip-rule="evenodd"/></svg>',
+  xmark: '<svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.36 6.64a.75.75 0 0 0-1.06-1.06L12 9.88 9.7 7.58a.75.75 0 1 0-1.06 1.06L10.94 11l-2.3 2.3a.75.75 0 1 0 1.06 1.06L12 12.06l2.3 2.3a.75.75 0 0 0 1.06-1.06L13.06 11l2.3-2.3z" clip-rule="evenodd"/></svg>'
+};
 
 const DEFAULT_LOCATIONS = [{"number": "121", "link": "https://www.google.com/maps?q=31.94410926,35.86359151"}, {"number": "128", "link": "https://www.google.com/maps?q=31.94945,35.85667"}, {"number": "136", "link": "https://www.google.com/maps?q=31.94820683,35.86330483"}, {"number": "141", "link": "https://www.google.com/maps?q=31.94174510,35.86756522"}, {"number": "149", "link": "https://www.google.com/maps?q=31.94837166,35.86249218"}, {"number": "150", "link": "https://www.google.com/maps?q=31.94830052,35.86251945"}, {"number": "151", "link": "https://www.google.com/maps?q=31.94789128,35.86943135"}, {"number": "161", "link": "https://www.google.com/maps?q=31.94945000,35.85396000"}, {"number": "162", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "163", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "164", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "166", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "168", "link": "https://www.google.com/maps?q=31.95086000,35.85725000"}, {"number": "169", "link": "https://www.google.com/maps?q=31.95086000,35.85725000"}, {"number": "170", "link": "https://www.google.com/maps?q=31.95086000,35.85725000"}, {"number": "171", "link": "https://www.google.com/maps?q=31.954919,35.851652"}, {"number": "172", "link": "https://www.google.com/maps?q=31.94515000,35.86538000"}, {"number": "173", "link": "https://www.google.com/maps?q=31.94515000,35.86538000"}, {"number": "174", "link": "https://www.google.com/maps?q=31.94633000,35.85222000"}, {"number": "175", "link": "https://www.google.com/maps?q=31.94515000,35.86529000"}, {"number": "176", "link": "https://www.google.com/maps?q=31.945146892,35.8652899897"}, {"number": "177", "link": "https://www.google.com/maps?q=31.9446781382,35.8652899897"}, {"number": "180", "link": "https://www.google.com/maps?q=31.945167,35.865201"}, {"number": "184", "link": "https://www.google.com/maps?q=31.94192190,35.87151709"}, {"number": "185", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "186", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "187", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "188", "link": "https://www.google.com/maps?q=31.941752,35.86171973"}, {"number": "189", "link": "https://www.google.com/maps?q=31.9523487,35.8607396"}, {"number": "191", "link": "https://www.google.com/maps?q=31.941752,35.86171973"}, {"number": "192", "link": "https://www.google.com/maps?q=31.9531907,35.8516818"}, {"number": "193", "link": "https://www.google.com/maps?q=31.94951672,35.85631271"}, {"number": "194", "link": "https://www.google.com/maps?q=31.94945000,35.85396000"}, {"number": "195", "link": "https://www.google.com/maps?q=31.9504071,35.8606511"}, {"number": "196", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "198", "link": "https://www.google.com/maps?q=31.947743,35.86743704"}, {"number": "204", "link": "https://www.google.com/maps?q=31.95205000,35.85369000"}, {"number": "205", "link": "https://www.google.com/maps?q=31.944865,35.86725621"}, {"number": "206", "link": "https://www.google.com/maps?q=31.943738,35.8637013"}, {"number": "208", "link": "https://www.google.com/maps?q=31.947743,35.86743704"}, {"number": "209", "link": "https://www.google.com/maps?q=31.9444691,35.8674177"}, {"number": "212", "link": "https://www.google.com/maps?q=31.94752970,35.86662288"}, {"number": "213", "link": "https://www.google.com/maps?q=31.94752970,35.86662289"}, {"number": "214", "link": "https://www.google.com/maps?q=31.9502671,35.8606052"}, {"number": "215", "link": "https://www.google.com/maps?q=31.94410926,35.86359151"}, {"number": "216", "link": "https://www.google.com/maps?q=31.94479025030129,35.86350593715906"}, {"number": "217", "link": "https://www.google.com/maps?q=31.944702,35.868251"}, {"number": "218", "link": "https://www.google.com/maps?q=31.947743,35.86743704"}, {"number": "219", "link": "https://www.google.com/maps?q=31.95086000,35.85725000"}, {"number": "220", "link": "https://www.google.com/maps?q=31.944893,35.863354"}, {"number": "221", "link": "https://www.google.com/maps?q=31.95086000,35.85725000"}, {"number": "223", "link": "https://www.google.com/maps?q=31.5639,35.52069"}, {"number": "224", "link": "https://www.google.com/maps?q=31.5639,35.52069"}, {"number": "Service Apartment 8", "link": "https://www.google.com/maps?q=31.954083,35.852000"}];
 
@@ -367,7 +428,8 @@ function renderResultsList(items){
   items.forEach(item=>{
     const row = document.createElement('div');
     row.className = 'result-item';
-    row.innerHTML = `<span class="r-name">${item.name}</span><span class="r-arrow">‹</span>`;
+    const icon = item.name.includes('سفارة') || item.name.includes('بعثة') ? ICONS.building : ICONS.pin;
+    row.innerHTML = `<span class="r-icon">${icon}</span><span class="r-name">${item.name}</span><span class="r-arrow">${ICONS.chevron}</span>`;
     row.addEventListener('click', ()=> openLocation(item));
     list.appendChild(row);
   });
@@ -384,17 +446,17 @@ function handleInput(){
   resultsList.innerHTML = '';
 
   if(!val){
-    liveMatch.textContent='';
+    liveMatch.innerHTML='';
     return;
   }
 
   if(isNumericQuery(val)){
     const found = findByNumber(val);
     if(found){
-      liveMatch.innerHTML = `✅ الموقع <b>${found.number}</b> موجود، دوس فتح`;
+      liveMatch.innerHTML = `<span class="status-icon ok">${ICONS.check}</span> الموقع <b>${found.number}</b> موجود، دوس فتح`;
     }else{
       liveMatch.classList.add('notfound');
-      liveMatch.textContent = '❌ ما في موقع بهيك رقم';
+      liveMatch.innerHTML = `<span class="status-icon bad">${ICONS.xmark}</span> ما في موقع بهيك رقم`;
     }
     return;
   }
@@ -403,12 +465,12 @@ function handleInput(){
   const matches = searchTextAll(val);
   if(matches.length === 0){
     liveMatch.classList.add('notfound');
-    liveMatch.textContent = '❌ ما في نتائج، جرب اكتب "سفاره"';
+    liveMatch.innerHTML = `<span class="status-icon bad">${ICONS.xmark}</span> ما في نتائج، جرب اكتب "سفاره"`;
   }else if(matches.length === 1){
-    liveMatch.innerHTML = `✅ لقيت <b>${matches[0].name}</b>، دوس فتح`;
+    liveMatch.innerHTML = `<span class="status-icon ok">${ICONS.check}</span> لقيت <b>${matches[0].name}</b>، دوس فتح`;
     renderResultsList(matches);
   }else{
-    liveMatch.textContent = `🔎 لقيت ${matches.length} نتيجة، اختار وحدة من تحت`;
+    liveMatch.innerHTML = `🔎 لقيت ${matches.length} نتيجة، اختار وحدة من تحت`;
     renderResultsList(matches);
   }
 }
@@ -442,12 +504,6 @@ document.getElementById('goBtn').addEventListener('click', ()=>{
 
 document.getElementById('chipEmbassies').addEventListener('click', ()=>{
   codeInput.value = 'سفاره';
-  handleInput();
-  codeInput.focus();
-});
-
-document.getElementById('chipClear').addEventListener('click', ()=>{
-  codeInput.value = '';
   handleInput();
   codeInput.focus();
 });

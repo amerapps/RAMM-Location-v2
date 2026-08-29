@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ramm-location-v2';
+const CACHE_NAME = 'ramm-location-v4';
 const ASSETS = [
   './',
   './index.html',
